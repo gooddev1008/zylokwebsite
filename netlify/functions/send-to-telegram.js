@@ -1,36 +1,43 @@
-const fetch = require("node-fetch");
-
 exports.handler = async (event) => {
-  const data = JSON.parse(event.body);
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, body: "Method Not Allowed" };
+  }
 
-  const name = data.name;
-  const email = data.email;
-  const phone = data.phone;
+  try {
+    const data = JSON.parse(event.body);
 
-  const message = `
-🔥 New Salon Lead
+    const text = `
+🔥 New Salon Lead — Zylok
 
-🏪 Name: ${name}
-📧 Email: ${email}
-📱 Phone: ${phone}
-  `;
+🏪 Salon: ${data.salonName || "—"}
+👤 Owner: ${data.ownerName || "—"}
+📧 Email: ${data.email || "—"}
+📱 Phone: ${data.phone || "—"}
+🏙️ City: ${data.city || "—"}
+🔢 Branches: ${data.branches || "—"}
+👥 Team size: ${data.staffSize || "—"}
+✂️ Services: ${data.services || "—"}${data.address ? `\n📍 Address: ${data.address}` : ""}${data.website ? `\n🌐 Website/IG: ${data.website}` : ""}${data.message ? `\n💬 Note: ${data.message}` : ""}
+📰 Newsletter: ${data.newsletter || "No"}
+    `.trim();
 
-  const TOKEN = "8725396159:AAEEskTHSwqoJs1yv_oLpC8YGfvsZWvFEOQ";
-  const CHAT_ID = "67994137";
+    const TOKEN = process.env.TELEGRAM_TOKEN;
+    const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-  await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      chat_id: CHAT_ID,
-      text: message
-    })
-  });
+    const response = await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ chat_id: CHAT_ID, text })
+    });
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ success: true })
-  };
+    const result = await response.json();
+
+    if (!result.ok) {
+      return { statusCode: 500, body: JSON.stringify({ error: result.description }) };
+    }
+
+    return { statusCode: 200, body: JSON.stringify({ success: true }) };
+
+  } catch (err) {
+    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+  }
 };
