@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>List Your Salon — Zylok</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0905;
+      --ivory: #f5f0e8;
+      --gold: #c9a84c;
+      --gold-light: #e2c97e;
+      --gold-dark: #8a6a1f;
+      --warm-gray: #2a2520;
+      --mid-gray: #6b6358;
+      --cream: #faf7f2;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--black);
+      color: var(--ivory);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 60px;
+      background: linear-gradient(to bottom, rgba(10,9,5,0.95), transparent);
+    }
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo svg { height: 44px; width: auto; }
+    .nav-back {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.65);
+      text-decoration: none;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-back:hover { color: var(--gold); }
+    .nav-back svg { transition: transform 0.3s; }
+    .nav-back:hover svg { transform: translateX(-4px); }
+
+    /* PAGE */
+    .page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      position: relative;
+    }
+
+    .page-aside {
+      background: linear-gradient(135deg, #1a1510 0%, #0d0b08 100%);
+      padding: 160px 60px 80px;
+      position: relative;
+      overflow: hidden;
+      border-right: 1px solid rgba(201,168,76,0.1);
+    }
+    .page-aside::before {
+      content: '';
+      position: absolute;
+      top: 30%; left: 50%;
+      transform: translate(-50%, -30%);
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .aside-tag {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: relative;
+      z-index: 2;
+    }
+    .aside-tag::before {
+      content: '';
+      display: block;
+      width: 40px; height: 1px;
+      background: var(--gold);
+    }
+    .aside-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 4.5vw, 60px);
+      font-weight: 300;
+      line-height: 1.08;
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .aside-title em { font-style: italic; color: var(--gold); }
+    .aside-sub {
+      font-size: 14px;
+      line-height: 1.85;
+      color: rgba(245,240,232,0.55);
+      margin-bottom: 48px;
+      max-width: 380px;
+      position: relative;
+      z-index: 2;
+    }
+    .aside-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      position: relative;
+      z-index: 2;
+    }
+    .aside-list li {
+      font-size: 13px;
+      color: rgba(245,240,232,0.7);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      line-height: 1.6;
+    }
+    .aside-list li::before {
+      content: '';
+      width: 22px; height: 1px;
+      background: var(--gold);
+      flex-shrink: 0;
+      margin-top: 10px;
+    }
+
+    /* FORM */
+    .page-main {
+      padding: 160px 80px 100px;
+      max-width: 720px;
+    }
+    .form-tag {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      margin-bottom: 12px;
+      line-height: 1.15;
+    }
+    .form-title em { font-style: italic; color: var(--gold); }
+    .form-intro {
+      font-size: 13px;
+      color: rgba(245,240,232,0.5);
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+
+    form { display: flex; flex-direction: column; gap: 28px; }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .field { display: flex; flex-direction: column; gap: 10px; }
+    .field label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.55);
+      font-weight: 500;
+    }
+    .field label .req { color: var(--gold); margin-left: 3px; }
+    .field input,
+    .field select,
+    .field textarea {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--ivory);
+      background: rgba(201,168,76,0.04);
+      border: 1px solid rgba(201,168,76,0.18);
+      padding: 14px 16px;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 0.3s, background 0.3s;
+      width: 100%;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.08);
+    }
+    .field textarea {
+      min-height: 110px;
+      resize: vertical;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .field select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+    .field select option { background: var(--black); color: var(--ivory); }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+      color: rgba(245,240,232,0.6);
+      line-height: 1.6;
+    }
+    .checkbox-row input[type=checkbox] {
+      appearance: none;
+      width: 18px; height: 18px;
+      border: 1px solid rgba(201,168,76,0.3);
+      background: rgba(201,168,76,0.04);
+      border-radius: 2px;
+      cursor: pointer;
+      flex-shrink: 0;
+      position: relative;
+      margin-top: 2px;
+    }
+    .checkbox-row input[type=checkbox]:checked {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .checkbox-row input[type=checkbox]:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px; top: 1px;
+      width: 5px; height: 10px;
+      border: solid var(--black);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .honeypot {
+      position: absolute;
+      left: -9999px;
+      width: 1px; height: 1px;
+      opacity: 0;
+    }
+
+    .form-actions {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-top: 12px;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--black);
+      padding: 16px 44px;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.15);
+      transform: translateX(-100%);
+      transition: transform 0.4s ease;
+    }
+    .btn-primary:hover::after { transform: translateX(0); }
+    .form-note {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: rgba(245,240,232,0.3);
+    }
+
+    .form-foot {
+      margin-top: 60px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      font-size: 12px;
+      color: rgba(245,240,232,0.4);
+      line-height: 1.7;
+    }
+    .form-foot a { color: var(--gold); text-decoration: none; }
+    .form-foot a:hover { color: var(--gold-light); }
+
+    @media (max-width: 900px) {
+      nav { padding: 20px 24px; }
+      .page { grid-template-columns: 1fr; }
+      .page-aside { padding: 120px 24px 60px; border-right: none; border-bottom: 1px solid rgba(201,168,76,0.1); }
+      .page-main { padding: 60px 24px 80px; }
+      .form-row { grid-template-columns: 1fr; gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <svg height="44" viewBox="195 78 300 72" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="navGold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#e2c97e"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient>
+          <linearGradient id="navGold2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#e2c97e"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient>
+        </defs>
+        <g>
+          <rect x="200" y="85" width="64" height="64" rx="4" fill="url(#navGold)"/>
+          <line x1="216" y1="101" x2="246" y2="133" stroke="#0f0d09" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="248" y1="101" x2="218" y2="133" stroke="#0f0d09" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="213" cy="99" r="5" fill="none" stroke="#0f0d09" stroke-width="2"/>
+          <circle cx="251" cy="99" r="5" fill="none" stroke="#0f0d09" stroke-width="2"/>
+          <circle cx="232" cy="117" r="2.5" fill="#0f0d09"/>
+        </g>
+        <g>
+          <text x="282" y="112" font-family="Georgia,serif" font-size="42" letter-spacing="8" fill="url(#navGold2)">ZYLOK</text>
+          <text x="282" y="138" font-family="Georgia,serif" font-size="12" letter-spacing="4" fill="#c9a84c" opacity="0.65">SALON MANAGEMENT</text>
+        </g>
+      </svg>
+    </a>
+    <a href="/" class="nav-back">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back to home
+    </a>
+  </nav>
+
+  <main class="page">
+    <aside class="page-aside">
+      <div class="aside-tag">Onboarding</div>
+      <h1 class="aside-title">Bring your<br/>salon to <em>Zylok</em>.</h1>
+      <p class="aside-sub">
+        Tell us about your business and our team will set up your account, migrate your data, and walk you through the platform — usually within 48 hours.
+      </p>
+      <ul class="aside-list">
+        <li>30-day free trial — no credit card required</li>
+        <li>White-glove onboarding and data migration</li>
+        <li>Personal account manager for your first month</li>
+        <li>Cancel anytime during trial, no questions asked</li>
+      </ul>
+    </aside>
+
+    <section class="page-main">
+      <div class="form-tag">Salon details</div>
+      <h2 class="form-title">Tell us about<br/>your <em>salon</em></h2>
+      <p class="form-intro">Fill in the details below and we'll get back to you within one business day to schedule your onboarding call.</p>
+
+      <form
+        id="salon-form"
+        name="salon-signup"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action="/thank-you"
+      >
+        <input type="hidden" name="form-name" value="salon-signup" />
+        <div class="honeypot">
+          <label>Don't fill this out: <input name="bot-field" /></label>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="salon-name">Salon name <span class="req">*</span></label>
+            <input id="salon-name" type="text" name="salon-name" required placeholder="Studio Glam" />
+          </div>
+          <div class="field">
+            <label for="owner-name">Owner name <span class="req">*</span></label>
+            <input id="owner-name" type="text" name="owner-name" required placeholder="Priya Sharma" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="email">Email <span class="req">*</span></label>
+            <input id="email" type="email" name="email" required placeholder="you@example.com" />
+          </div>
+          <div class="field">
+            <label for="phone">Phone <span class="req">*</span></label>
+            <input id="phone" type="tel" name="phone" required placeholder="+91 90000 00000" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="city">City <span class="req">*</span></label>
+            <input id="city" type="text" name="city" required placeholder="Mumbai" />
+          </div>
+          <div class="field">
+            <label for="branches">Number of branches</label>
+            <select id="branches" name="branches">
+              <option value="1">1 branch</option>
+              <option value="2-5">2–5 branches</option>
+              <option value="6-10">6–10 branches</option>
+              <option value="10+">10+ branches</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="staff-size">Team size</label>
+            <select id="staff-size" name="staff-size">
+              <option value="1-3">1–3 stylists</option>
+              <option value="4-10">4–10 stylists</option>
+              <option value="11-25">11–25 stylists</option>
+              <option value="25+">25+ stylists</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="services">Primary services</label>
+            <select id="services" name="services">
+              <option value="hair">Hair</option>
+              <option value="beauty">Beauty &amp; skin</option>
+              <option value="spa">Spa &amp; wellness</option>
+              <option value="barber">Barbershop</option>
+              <option value="full-service">Full-service salon</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="address">Salon address</label>
+          <input id="address" type="text" name="address" placeholder="Street, area, city" />
+        </div>
+
+        <div class="field">
+          <label for="website">Website or Instagram</label>
+          <input id="website" type="text" name="website" placeholder="https://instagram.com/yoursalon" />
+        </div>
+
+        <div class="field">
+          <label for="message">Anything else we should know?</label>
+          <textarea id="message" name="message" placeholder="Current software, special requests, migration needs…"></textarea>
+        </div>
+
+        <label class="checkbox-row">
+          <input type="checkbox" name="newsletter" value="yes" />
+          <span>Send me product updates and salon-industry tips. Unsubscribe anytime.</span>
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Submit application</button>
+          <span class="form-note">We'll reply within 1 business day</span>
+        </div>
+      </form>
+
+      <p class="form-foot">
+        Prefer to talk first? Email <a href="mailto:contact@zylok.com">contact@zylok.in</a> or call <a href="tel:+919026377643">+91 90263 77643</a>.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const TELEGRAM_TOKEN = "8725396159:AAEEskTHSwqoJs1yv_oLpC8YGfvsZWvFEOQ";
+    const TELEGRAM_CHAT_ID = "6815138969";
+
+    document.getElementById("salon-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+
+      // Collect all form fields
+      const salonName  = form["salon-name"].value.trim();
+      const ownerName  = form["owner-name"].value.trim();
+      const email      = form["email"].value.trim();
+      const phone      = form["phone"].value.trim();
+      const city       = form["city"].value.trim();
+      const branches   = form["branches"].value;
+      const staffSize  = form["staff-size"].value;
+      const services   = form["services"].value;
+      const address    = form["address"].value.trim();
+      const website    = form["website"].value.trim();
+      const message    = form["message"].value.trim();
+      const newsletter = form["newsletter"].checked ? "Yes" : "No";
+
+      const text =
+`🔥 New Salon Lead — Zylok
+
+🏪 Salon: ${salonName}
+👤 Owner: ${ownerName}
+📧 Email: ${email}
+📱 Phone: ${phone}
+🏙️ City: ${city}
+🔢 Branches: ${branches}
+👥 Team size: ${staffSize}
+✂️ Services: ${services}${address  ? `\n📍 Address: ${address}` : ""}${website  ? `\n🌐 Website/IG: ${website}` : ""}${message  ? `\n💬 Note: ${message}` : ""}
+📰 Newsletter: ${newsletter}`;
+
+      try {
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text })
+        });
+      } catch (err) {
+        console.error("Telegram notification failed:", err);
+        // Non-blocking — form still submits even if Telegram fails
+      }
+
+      // Submit the form normally (Netlify handles the redirect to /thank-you)
+      form.submit();
+    });
+  </script>
+
+</body>
+</html>
