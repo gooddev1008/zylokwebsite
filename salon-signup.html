@@ -51,7 +51,7 @@
       background: linear-gradient(to bottom, rgba(10,9,5,0.95), transparent);
     }
     .nav-logo { text-decoration: none; display: flex; align-items: center; }
-    .nav-logo svg { height: 44px; width: auto; }
+    .nav-logo img { height: 44px; width: auto; }
     .nav-back {
       font-size: 12px;
       letter-spacing: 0.18em;
@@ -332,24 +332,7 @@
   <!-- NAV -->
   <nav>
     <a href="/" class="nav-logo">
-      <svg height="44" viewBox="195 78 300 72" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="navGold" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#e2c97e"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient>
-          <linearGradient id="navGold2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#e2c97e"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient>
-        </defs>
-        <g>
-          <rect x="200" y="85" width="64" height="64" rx="4" fill="url(#navGold)"/>
-          <line x1="216" y1="101" x2="246" y2="133" stroke="#0f0d09" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="248" y1="101" x2="218" y2="133" stroke="#0f0d09" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="213" cy="99" r="5" fill="none" stroke="#0f0d09" stroke-width="2"/>
-          <circle cx="251" cy="99" r="5" fill="none" stroke="#0f0d09" stroke-width="2"/>
-          <circle cx="232" cy="117" r="2.5" fill="#0f0d09"/>
-        </g>
-        <g>
-          <text x="282" y="112" font-family="Georgia,serif" font-size="42" letter-spacing="8" fill="url(#navGold2)">ZYLOK</text>
-          <text x="282" y="138" font-family="Georgia,serif" font-size="12" letter-spacing="4" fill="#c9a84c" opacity="0.65">SALON MANAGEMENT</text>
-        </g>
-      </svg>
+      <img src="/logo.svg" alt="Zylok" height="44" />
     </a>
     <a href="/" class="nav-back">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -492,7 +475,6 @@
 
       const form = e.target;
 
-      // Collect all form fields
       const salonName  = form["salon-name"].value.trim();
       const ownerName  = form["owner-name"].value.trim();
       const email      = form["email"].value.trim();
@@ -531,10 +513,8 @@
         });
       } catch (err) {
         console.error("Telegram notification failed:", err);
-        // Non-blocking — form still submits even if Telegram fails
       }
 
-      // Submit the form normally (Netlify handles the redirect to /thank-you)
       form.submit();
     });
     });
