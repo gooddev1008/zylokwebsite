@@ -4,19 +4,49 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zylok — Salon Management, Elevated</title>
+  <!--favicon-->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <meta name="description" content="Find nearby salons, book your slot or join the live queue, and walk in exactly when it's your turn. No delays. No chaos." />
+  <meta name="keywords" content="nearby salon booking, salon booking app India, book salon appointment online, salon near me" />
+  <!-- Open Graph (WhatsApp, Facebook, LinkedIn previews) -->
+<meta property="og:title" content="Zylok — Salon Management, Elevated" />
+<meta property="og:description" content="Find nearby salons, book your slot or join the live queue, and walk in exactly when it's your turn." />
+<meta property="og:image" content="https://zylok.in/web-app-manifest-512x512.png" />
+<meta property="og:url" content="https://zylok.in" />
+<meta property="og:type" content="website" />
+<!-- Google Search Logo Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Zylok",
+  "url": "https://zylok.in",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://zylok.in/web-app-manifest-512x512.png",
+    "width": 512,
+    "height": 512
+  }
+}
+</script>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black: #0a0905;
-      --ivory: #f5f0e8;
-      --gold: #c9a84c;
-      --gold-light: #e2c97e;
+      --black:     #0a0905;
+      --ivory:     #f5f0e8;
+      --gold:      #c9a84c;
+      --gold-light:#e2c97e;
       --gold-dark: #8a6a1f;
       --warm-gray: #2a2520;
-      --mid-gray: #6b6358;
-      --cream: #faf7f2;
+      --mid-gray:  #6b6358;
+      --cream:     #faf7f2;
     }
 
     html { scroll-behavior: smooth; }
@@ -26,118 +56,9 @@
       background: var(--black);
       color: var(--ivory);
       overflow-x: hidden;
-      cursor: none;
     }
 
-    /* Custom cursor */
-    .cursor {
-      position: fixed;
-      width: 8px; height: 8px;
-      background: var(--gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s ease;
-    }
-    .cursor-ring {
-      position: fixed;
-      width: 32px; height: 32px;
-      border: 1px solid rgba(201,168,76,0.5);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: all 0.15s ease;
-    }
-
-    /* Noise overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.4;
-    }
-
-    /* NAV */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 28px 60px;
-      background: linear-gradient(to bottom, rgba(10,9,5,0.95), transparent);
-    }
-    .nav-logo {
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-    }
-    /* ✅ Updated: img instead of svg */
-    .nav-logo img { height: 44px; width: auto; }
-
-    /* Shimmer on nav logo hover */
-    .nav-logo-wrap {
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      border-radius: 3px;
-    }
-    .nav-logo-wrap::after {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 60%;
-      height: 100%;
-      background: linear-gradient(120deg, transparent 0%, rgba(255,220,120,0.0) 30%, rgba(255,220,120,0.55) 50%, rgba(255,220,120,0.0) 70%, transparent 100%);
-      pointer-events: none;
-    }
-    .nav-logo-wrap:hover::after {
-      animation: shimmer 2.2s ease forwards;
-    }
-    @keyframes shimmer {
-      0%   { left: -100%; }
-      100% { left: 160%; }
-    }
-    /* ✅ Updated: glow on img instead of .icon-box / .wordmark */
-    .nav-logo-wrap:hover img {
-      filter: drop-shadow(0 0 6px rgba(201,168,76,0.7));
-      transition: filter 0.5s ease;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 12px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(245,240,232,0.65);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: var(--gold); }
-    .nav-cta {
-      font-size: 12px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--black);
-      background: var(--gold);
-      padding: 12px 28px;
-      text-decoration: none;
-      transition: background 0.3s;
-    }
-    .nav-cta:hover { background: var(--gold-light); }
-
-    /* HERO */
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: grid;
@@ -145,7 +66,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .hero-left {
       display: flex;
       flex-direction: column;
@@ -154,7 +74,6 @@
       position: relative;
       z-index: 2;
     }
-
     .hero-tag {
       font-size: 10px;
       letter-spacing: 0.3em;
@@ -173,7 +92,6 @@
       width: 40px; height: 1px;
       background: var(--gold);
     }
-
     .hero-title {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(56px, 6vw, 90px);
@@ -185,7 +103,6 @@
       animation: fadeUp 0.9s 0.35s forwards;
     }
     .hero-title em { font-style: italic; color: var(--gold); }
-
     .hero-subtitle {
       font-size: 15px;
       font-weight: 300;
@@ -196,7 +113,6 @@
       opacity: 0;
       animation: fadeUp 0.9s 0.5s forwards;
     }
-
     .hero-actions {
       display: flex;
       align-items: center;
@@ -205,6 +121,7 @@
       animation: fadeUp 0.9s 0.65s forwards;
     }
     .btn-primary {
+      white-space: nowrap;
       background: var(--gold);
       color: var(--black);
       padding: 16px 40px;
@@ -240,7 +157,6 @@
     .btn-ghost:hover { color: var(--gold); }
     .btn-ghost svg { transition: transform 0.3s; }
     .btn-ghost:hover svg { transform: translateX(4px); }
-
     .hero-right {
       position: relative;
       overflow: hidden;
@@ -255,7 +171,6 @@
       align-items: center;
       justify-content: center;
     }
-
     .dashboard-mock {
       width: 85%;
       background: rgba(30,25,18,0.9);
@@ -268,17 +183,9 @@
     }
     @keyframes float {
       0%, 100% { transform: perspective(1000px) rotateY(-8deg) rotateX(3deg) translateY(0); }
-      50% { transform: perspective(1000px) rotateY(-8deg) rotateX(3deg) translateY(-12px); }
+      50%       { transform: perspective(1000px) rotateY(-8deg) rotateX(3deg) translateY(-12px); }
     }
-
-    .mock-header {
-      background: rgba(201,168,76,0.08);
-      border-bottom: 1px solid rgba(201,168,76,0.12);
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .mock-header { background: rgba(201,168,76,0.08); border-bottom: 1px solid rgba(201,168,76,0.12); padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
     .mock-dots { display: flex; gap: 7px; }
     .mock-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(201,168,76,0.3); }
     .mock-title-bar { flex: 1; height: 8px; background: rgba(201,168,76,0.08); border-radius: 2px; }
@@ -295,7 +202,6 @@
     .mock-badge { font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 1px; }
     .badge-gold { background: rgba(201,168,76,0.18); color: var(--gold); }
     .badge-gray { background: rgba(245,240,232,0.06); color: rgba(245,240,232,0.4); }
-
     .hero-line {
       position: absolute;
       left: 60px; bottom: 60px;
@@ -305,18 +211,14 @@
       animation: fadeIn 1s 1s forwards;
     }
 
-    .marquee-wrap {
-      border-top: 1px solid rgba(201,168,76,0.12);
-      border-bottom: 1px solid rgba(201,168,76,0.12);
-      overflow: hidden;
-      padding: 18px 0;
-      background: rgba(201,168,76,0.03);
-    }
+    /* ── MARQUEE ── */
+    .marquee-wrap { border-top: 1px solid rgba(201,168,76,0.12); border-bottom: 1px solid rgba(201,168,76,0.12); overflow: hidden; padding: 18px 0; background: rgba(201,168,76,0.03); }
     .marquee-track { display: flex; gap: 60px; animation: marquee 20s linear infinite; white-space: nowrap; }
     .marquee-item { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(201,168,76,0.5); display: flex; align-items: center; gap: 60px; flex-shrink: 0; }
     .marquee-item::after { content: '✦'; color: var(--gold); font-size: 8px; }
     @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
+    /* ── SECTIONS ── */
     section { position: relative; }
     .section-tag { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: flex; align-items: center; gap: 14px; }
     .section-tag::before { content: ''; display: block; width: 30px; height: 1px; background: var(--gold); }
@@ -324,6 +226,7 @@
     .section-title em { font-style: italic; color: var(--gold); }
     .section-sub { font-size: 14px; line-height: 1.8; color: rgba(245,240,232,0.5); max-width: 500px; }
 
+    /* ── FEATURES ── */
     .features { padding: 120px 60px; }
     .features-header { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; margin-bottom: 80px; }
     .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.1); }
@@ -335,6 +238,7 @@
     .feature-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; margin-bottom: 14px; letter-spacing: 0.02em; }
     .feature-desc { font-size: 13px; line-height: 1.8; color: rgba(245,240,232,0.45); }
 
+    /* ── DUAL ── */
     .dual { padding: 120px 60px; background: rgba(201,168,76,0.02); border-top: 1px solid rgba(201,168,76,0.08); border-bottom: 1px solid rgba(201,168,76,0.08); }
     .dual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 80px; }
     .dual-card { padding: 60px 52px; background: var(--black); position: relative; overflow: hidden; }
@@ -347,6 +251,7 @@
     .dual-list li { font-size: 13px; color: rgba(245,240,232,0.6); display: flex; align-items: center; gap: 12px; }
     .dual-list li::before { content: ''; width: 20px; height: 1px; background: var(--gold); flex-shrink: 0; }
 
+    /* ── TESTIMONIALS ── */
     .testimonials { padding: 120px 60px; }
     .testimonials-header { margin-bottom: 70px; }
     .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -359,6 +264,7 @@
     .testimonial-name { font-size: 13px; font-weight: 500; letter-spacing: 0.05em; margin-bottom: 2px; }
     .testimonial-role { font-size: 11px; color: rgba(245,240,232,0.35); letter-spacing: 0.1em; }
 
+    /* ── CTA ── */
     .cta-section { padding: 140px 60px; text-align: center; position: relative; overflow: hidden; border-top: 1px solid rgba(201,168,76,0.08); }
     .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%); pointer-events: none; }
     .cta-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(44px, 5vw, 76px); font-weight: 300; line-height: 1.1; margin-bottom: 24px; }
@@ -371,62 +277,36 @@
     .cta-contact-link:hover { color: var(--gold); }
     .cta-contact-divider { color: rgba(201,168,76,0.3); font-size: 14px; }
 
-    /* FOOTER */
-    footer { border-top: 1px solid rgba(201,168,76,0.1); padding: 50px 60px; display: flex; align-items: center; justify-content: space-between; }
-    .footer-logo { display: flex; align-items: center; }
-    /* ✅ Updated: img instead of svg */
-    .footer-logo img { height: 36px; width: auto; opacity: 0.85; }
-    .footer-copy { font-size: 11px; letter-spacing: 0.1em; color: rgba(245,240,232,0.25); }
-    .footer-links { display: flex; gap: 32px; list-style: none; }
-    .footer-links a { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,240,232,0.35); text-decoration: none; transition: color 0.3s; }
-    .footer-links a:hover { color: var(--gold); }
-
+    /* ── ANIMATIONS ── */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      nav { padding: 20px 24px; } .nav-links { display: none; }
-      .hero { grid-template-columns: 1fr; min-height: auto; } .hero-left { padding: 120px 24px 60px; } .hero-right { height: 320px; }
-      .features { padding: 80px 24px; } .features-header { grid-template-columns: 1fr; } .features-grid { grid-template-columns: 1fr; }
-      .dual { padding: 80px 24px; } .dual-grid { grid-template-columns: 1fr; }
-      .testimonials { padding: 80px 24px; } .testimonials-grid { grid-template-columns: 1fr; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 120px 24px 60px; }
+      .hero-right { height: 320px; }
+      .features { padding: 80px 24px; }
+      .features-header { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .dual { padding: 80px 24px; }
+      .dual-grid { grid-template-columns: 1fr; }
+      .testimonials { padding: 80px 24px; }
+      .testimonials-grid { grid-template-columns: 1fr; }
       .cta-section { padding: 100px 24px; }
-      footer { padding: 40px 24px; flex-direction: column; gap: 20px; text-align: center; } .footer-links { flex-wrap: wrap; justify-content: center; }
-      body { cursor: auto; } .cursor, .cursor-ring { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <!-- NAV — ✅ logo.svg replaces inline SVG -->
-  <nav>
-    <a href="/" class="nav-logo">
-      <div class="nav-logo-wrap">
-        <img src="logo.svg" height="44" alt="Zylok" />
-      </div>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#features">Features</a></li>
-      <li><a href="#for-you">For You</a></li>
-      <li><a href="#testimonials">Stories</a></li>
-      <li><a href="/salon-signup">List Your Salon</a></li>
-    </ul>
-    <a href="/salon-signup" class="nav-cta">Get Early Access</a>
-  </nav>
-
-  <!-- HERO -->
+  <!-- ─── HERO ─────────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-left">
       <div class="hero-tag">Made for clients. Made for owners.</div>
       <h1 class="hero-title">No more<br/><em>waiting</em><br/>at salons.</h1>
       <p class="hero-subtitle">Find nearby salons, book your slot or join the live queue, and walk in exactly when it's your turn. No delays. No chaos.</p>
       <div class="hero-actions">
-        <a href="/salon-signup" class="btn-primary">Start Free Trial</a>
+        <a href="/nearby-salons" class="btn-primary">Download App Now</a>
         <a href="#features" class="btn-ghost">
           Explore features
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -456,7 +336,7 @@
     </div>
   </section>
 
-  <!-- MARQUEE -->
+  <!-- ─── MARQUEE ──────────────────────────────────────── -->
   <div class="marquee-wrap">
     <div class="marquee-track">
       <div class="marquee-item">Live Queue Tracking</div><div class="marquee-item">Instant Booking</div><div class="marquee-item">Client Profiles</div><div class="marquee-item">Revenue Analytics</div><div class="marquee-item">Inventory Tracking</div><div class="marquee-item">Loyalty Programs</div><div class="marquee-item">WhatsApp Reminders</div><div class="marquee-item">Multi-Branch Support</div>
@@ -464,7 +344,7 @@
     </div>
   </div>
 
-  <!-- FEATURES -->
+  <!-- ─── FEATURES ─────────────────────────────────────── -->
   <section class="features" id="features">
     <div class="features-header reveal">
       <div>
@@ -507,7 +387,7 @@
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
+  <!-- ─── HOW IT WORKS ──────────────────────────────────── -->
   <section class="features">
     <div class="features-header reveal">
       <div>
@@ -518,7 +398,7 @@
     </div>
   </section>
 
-  <!-- DUAL AUDIENCE -->
+  <!-- ─── DUAL AUDIENCE ─────────────────────────────────── -->
   <section class="dual" id="for-you">
     <div class="reveal">
       <div class="section-tag">Built for everyone</div>
@@ -552,7 +432,7 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
+  <!-- ─── TESTIMONIALS ──────────────────────────────────── -->
   <section class="testimonials" id="testimonials">
     <div class="testimonials-header reveal">
       <div class="section-tag">Stories</div>
@@ -576,20 +456,81 @@
       </div>
     </div>
   </section>
+    <!-- ─── DOWNLOAD ─────────────────────────────────────── -->
+<section class="dual" id="download" style="border-top: 1px solid rgba(201,168,76,0.08);">
+  <div class="reveal" style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+    <div>
+      <div class="section-tag">For Clients</div>
+      <h2 class="section-title">Your salon visit,<br/><em>in your pocket.</em></h2>
+      <p class="section-sub" style="margin-bottom:48px;">Find nearby salons, join the live queue, pick your stylist, and walk in only when it's your turn. Download Zylok and never wait again.</p>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <a href="/nearby-salons" style="display:flex; align-items:center; gap:12px; background:var(--ivory); color:var(--black); padding:14px 28px; text-decoration:none; transition:opacity 0.3s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div>
+            <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; opacity:0.6;">Download on the</div>
+            <div style="font-size:15px; font-weight:500; letter-spacing:0.03em;">App Store</div>
+          </div>
+        </a>
+        <a href="/nearby-salons" style="display:flex; align-items:center; gap:12px; background:var(--ivory); color:var(--black); padding:14px 28px; text-decoration:none; transition:opacity 0.3s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76c.3.17.64.22.99.14l12.75-7.35-2.88-2.88-10.86 10.09zM.93 1.24C.57 1.56.33 2.07.33 2.7v18.6c0 .63.24 1.14.6 1.46l.09.07 10.43-10.43v-.24L.93 1.24zm18.63 8.94l-2.64-1.53-3.18 3.18 3.18 3.18 2.67-1.53c.76-.44.76-1.86-.03-2.3zM4.17.24L16.92 7.59l-2.88 2.88L4.17.24z"/></svg>
+          <div>
+            <div style="font-size:9px; letter-spacing:0.15em; text-transform:uppercase; opacity:0.6;">Get it on</div>
+            <div style="font-size:15px; font-weight:500; letter-spacing:0.03em;">Google Play</div>
+          </div>
+        </a>
+      </div>
+      <p style="margin-top:20px; font-size:11px; letter-spacing:0.1em; color:rgba(245,240,232,0.25);">Free to download · No hidden charges · Available across India</p>
+    </div>
 
-  <!-- CTA -->
+    <div style="display:flex; justify-content:center; align-items:center; gap:32px;">
+      <div style="background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.15); padding:40px; display:flex; flex-direction:column; align-items:center; gap:16px;">
+        <div style="width:120px; height:120px; background:var(--ivory); display:flex; align-items:center; justify-content:center; padding:8px;">
+          <svg viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100" height="100" fill="white"/>
+            <rect x="10" y="10" width="30" height="30" fill="#0a0905"/>
+            <rect x="15" y="15" width="20" height="20" fill="white"/>
+            <rect x="19" y="19" width="12" height="12" fill="#0a0905"/>
+            <rect x="60" y="10" width="30" height="30" fill="#0a0905"/>
+            <rect x="65" y="15" width="20" height="20" fill="white"/>
+            <rect x="69" y="19" width="12" height="12" fill="#0a0905"/>
+            <rect x="10" y="60" width="30" height="30" fill="#0a0905"/>
+            <rect x="15" y="65" width="20" height="20" fill="white"/>
+            <rect x="19" y="69" width="12" height="12" fill="#0a0905"/>
+            <rect x="60" y="45" width="8" height="8" fill="#0a0905"/>
+            <rect x="72" y="45" width="8" height="8" fill="#0a0905"/>
+            <rect x="84" y="45" width="8" height="8" fill="#0a0905"/>
+            <rect x="60" y="57" width="8" height="8" fill="#0a0905"/>
+            <rect x="72" y="57" width="20" height="8" fill="#0a0905"/>
+            <rect x="60" y="69" width="8" height="8" fill="#0a0905"/>
+            <rect x="72" y="69" width="8" height="8" fill="#0a0905"/>
+            <rect x="84" y="69" width="8" height="8" fill="#0a0905"/>
+            <rect x="60" y="81" width="32" height="8" fill="#0a0905"/>
+            <rect x="45" y="10" width="8" height="8" fill="#0a0905"/>
+            <rect x="45" y="22" width="8" height="8" fill="#0a0905"/>
+            <rect x="45" y="34" width="8" height="8" fill="#0a0905"/>
+            <rect x="45" y="46" width="8" height="32" fill="#0a0905"/>
+          </svg>
+        </div>
+        <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:rgba(201,168,76,0.6);">Scan to Download</div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @media (max-width: 900px) {
+      #download .reveal { grid-template-columns: 1fr; text-align: center; }
+      #download .reveal > div:first-child { order: 2; }
+    }
+  </style>
+</section>
+  <!-- ─── CTA ───────────────────────────────────────────── -->
   <section class="cta-section" id="cta">
-    <form id="leadForm" style="display:none;">
-      <input type="text" name="name" value="Zylok Lead" />
-      <input type="email" name="email" value="unknown@lead.com" />
-      <input type="tel" name="phone" value="not_provided" />
-    </form>
     <div class="reveal">
       <div class="section-tag" style="justify-content:center">Early Access</div>
       <h2 class="cta-title">Elevate your salon<br/>with <em>Zylok</em> today.</h2>
       <p class="cta-sub">Join salons across India already transforming their business. Start your 30-day free trial — no credit card required.</p>
       <div class="cta-actions">
-        <a href="/salon-signup" id="leadBtn" class="btn-primary">Start Free Trial</a>
+        <a href="/salon-signup" class="btn-primary">Start Free Trial</a>
         <a href="/salon-signup" class="btn-ghost">Request a demo <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
       <p class="cta-note">30-day free trial · No credit card · Cancel anytime</p>
@@ -601,41 +542,56 @@
     </div>
   </section>
 
-  <!-- FOOTER — ✅ logo.svg replaces inline SVG -->
-  <footer>
-    <div class="footer-logo">
-      <img src="logo.svg" height="36" alt="Zylok" />
-    </div>
-    <p class="footer-copy">© 2025 Zylok · zylok.in · All rights reserved.</p>
-    <ul class="footer-links">
-      <li><a href="#">Privacy</a></li>
-      <li><a href="#">Terms</a></li>
-      <li><a href="mailto:contact@zylok.in">contact@zylok.in</a></li>
-      <li><a href="tel:+919026377643">+91 90263 77643</a></li>
-    </ul>
-  </footer>
+  <!-- ─── SCRIPTS (splash + nav + footer) ──────────────── -->
+  <script src="/splash.js"></script>
+  <script src="/nav.js"></script>
+  <script src="/footer.js"></script>
+<script>
+  if ('ontouchstart' in window) {
+    const cursor = document.createElement('div');
+    cursor.style.cssText = `
+      position: fixed;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.9) 0%, rgba(201,168,76,0.3) 60%, transparent 80%);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    `;
+    document.body.appendChild(cursor);
 
-  <script>
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function animateCursor() {
-      cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
-      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-      requestAnimationFrame(animateCursor);
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+    let visible = false;
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function animate() {
+      currentX = lerp(currentX, targetX, 0.08);
+      currentY = lerp(currentY, targetY, 0.08);
+      cursor.style.left = currentX + 'px';
+      cursor.style.top  = currentY + 'px';
+      requestAnimationFrame(animate);
     }
-    animateCursor();
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => { ring.style.transform = 'translate(-50%, -50%) scale(1.8)'; ring.style.borderColor = 'rgba(201,168,76,0.8)'; });
-      el.addEventListener('mouseleave', () => { ring.style.transform = 'translate(-50%, -50%) scale(1)'; ring.style.borderColor = 'rgba(201,168,76,0.5)'; });
+    animate();
+
+    document.addEventListener('touchstart', function(e) {
+      targetX = e.touches[0].clientX;
+      targetY = e.touches[0].clientY;
+      cursor.style.opacity = '1';
     });
-    const reveals = document.querySelectorAll('.reveal');
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => obs.observe(el));
-  </script>
+
+    document.addEventListener('touchmove', function(e) {
+      targetX = e.touches[0].clientX;
+      targetY = e.touches[0].clientY;
+    });
+
+    document.addEventListener('touchend', function() {
+      cursor.style.opacity = '0';
+    });
+  }
+</script>
 </body>
 </html>
